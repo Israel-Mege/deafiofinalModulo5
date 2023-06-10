@@ -6,6 +6,7 @@ class TweetsController < ApplicationController
   # GET /tweets or /tweets.json
   def index
     @tweets = Tweet.all
+    @tweets = Tweet.paginate(page: params[:page], per_page: 10)
   end
 
   # GET /tweets/1 or /tweets/1.json
@@ -57,6 +58,13 @@ class TweetsController < ApplicationController
     end
   end
 
+  def search
+    @termino = params[:q]
+    @tweets = Tweet.where('description LIKE :termino OR username LIKE :termino', termino: "%#{@termino}%")
+    @tweets = Tweet.paginate(page: params[:page], per_page: 10)
+  end
+
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -66,6 +74,7 @@ class TweetsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def tweet_params
-    params.require(:tweet).permit(:Description, :UserName)
+    params.require(:tweet).permit(:description, :username)
   end
+
 end

@@ -4,7 +4,7 @@
       <div class="sidebar">
         <div class="icon-container">
           <%= link_to "tweets" do %>
-            <%= image_tag("twitter.png", alt: "Twitter Icon", class: "icon") %>
+          <%= image_tag("twitter.png", alt: "Twitter Icon", class: "icon") %>
           <% end %>
           <%= link_to "search" do %>
             <%= image_tag("search.png", alt: "search Icon", class: "icon") %>
@@ -20,10 +20,18 @@
             <h1>Explorar</h1>
           </div>
           <div class="col">
-            <%= image_tag("setting.png", alt: "Search Icon", class: "icon") %>
+            <%= image_tag("setting.png", alt: "setting Icon", class: "icon") %>
           </div>
         </div>
-        <div class="row" id="tweets">
+        <%= form_tag search_tweet_path, method: :get, class: "search-form" do %>
+          <%= text_field_tag :q, params[:q], placeholder: 'Buscar tweets', class: "search-input" %>
+          <%= submit_tag 'Buscar', class: "search-button" %>
+        <% end %>
+      </div>
+      <h1>Resultados de búsqueda</h1>
+      <% if @tweets.present? %>
+        <p>Se encontraron <%= @tweets.count %> resultados para "<%= @termino %>".</p>
+        <div id="tweets">
           <% @tweets.each do |tweet| %>
             <%= render tweet %>
             <div class="icon-container-tweet">
@@ -36,11 +44,12 @@
             <p>
               <%= link_to "Show this tweet", tweet %>
             </p>
-          <% end %>
-          <%= link_to "New tweet", new_tweet_path %>
-          <%= will_paginate @tweets %>
+            <%= will_paginate @tweets %>
+        <% end %>
         </div>
-      </div>
+      <% else %>
+        <p>No se encontraron resultados para "<%= @termino %>".</p>
+      <% end %>
     </div>
     <div class="col-lg-3 fixed-column">
       <div class="sidebar">

@@ -1,9 +1,10 @@
 <div id="<%= dom_id tweet %>">
-  <div class="card" style="width: 18rem;">
+  <% image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: ['nature', 'animal']) %>
+  <div class="card" style="width: 100%;">
     <div class="card-body">
-      <h5 class="card-title"><%= tweet.UserName %></h5>
-      <p> <%= tweet.Description %>  </p>
-      <img src="..." class="card-img-top" alt="...">
+      <h5 class="card-title"><%= tweet.username%></h5>
+      <p> <%= tweet.description %>  </p>
+      <img src="<%= image_url %>" class="card-img-top" alt="...">
     </div>
   </div>
 </div>

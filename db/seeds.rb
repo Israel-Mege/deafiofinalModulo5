@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+15.times do
+  Tweet.create(
+    description: Faker::Lorem.sentence,
+    username: Faker::Internet.username
+  )
+end
+
+image_url = Faker::LoremFlickr.image(size: "300x300", search_terms: ['nature', 'animal'])
